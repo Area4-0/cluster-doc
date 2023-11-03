@@ -1,0 +1,7 @@
+site_name: Cluster 4.0 Documentation
+theme: 
+  name: readthedocs
+markdown_extensions:
+  - toc:
+      permalink: "#"
+  - admonition
