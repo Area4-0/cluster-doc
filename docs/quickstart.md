@@ -16,7 +16,7 @@ The important aspects that need to be known, at least on a basic level, by clust
 
 1. Request access to the VPN and to the required cluster, [here](./how-to/request-access.md) is described how to do it.
 2. Configure your environment to use the VPN, following the guide received by email.
-3. Go to [https://andromeda.apice.unibo.it](https://clusters.almaai.unibo.it)
+3. Go to [https://andromeda.apice.unibo.it](https://andromeda.apice.unibo.it)
 4. Select an environment (i.e. a cluster) from the available ones on which launch containers
 5. Launch your Docker container following [good practices](./good-practices.md#good-practices).
 
