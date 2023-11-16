@@ -7,11 +7,7 @@ At the moment, the cluster management system is based on Docker Swarm, and avail
 
 ![](./images/portainer_environments.png)
 
-`Portainer` is a service that enables users to deploy containers in clusters through a web interface, providing also an access management system. Portainer manages many environments (i.e. clusters), and at the moment there is only one cluster available on the platform, the Cluster 4.0, that is composed of three machines:
-
-1. `andromeda.apice.unibo.it`
-2. `iris.apice.unibo.it`
-3. `worker1.antares.apice.unibo.it`
+`Portainer` is a service that enables users to deploy containers in clusters through a web interface, providing also an access management system. Portainer manages many environments (i.e. clusters), and at the moment there is only one cluster available on the platform, which are visible through the `Cluster Visualizer` section inside the web dashboard.
 
 ![](./images/cluster-nodes.png)
 
