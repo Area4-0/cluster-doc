@@ -20,4 +20,4 @@ All cluster’s machines are Linux servers.
     The machines are not accessible from the outside, you need to be connected to the **campus of Cesena's VPN** network to access them.
 
 !!! note
-    Machines' resources are shared among all ALMAAI researchers, so unused containers should be removed to leave resources available to other users.
+    Machines' resources are shared among all researchers, so unused containers should be removed to leave resources available to other users.
