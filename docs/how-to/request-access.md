@@ -13,7 +13,7 @@ To get access to the platform you need to perform these operations:
 If you are owner of a `unibo` credential you can directly request access to the VPN by sending an email to `ciro.barbone@unibo.it`. 
 When you will be granted access you will receive an email with the instructions to connect to the VPN.
 
-Then, you can access the Portainer dashboard at [http://andromeda.apice.unibo.it](http://andromeda.apice.unibo.it), where you can login with your `unibo` credential and run your experiments.
+Then, you can access the Portainer dashboard at [https://andromeda.apice.unibo.it](https://andromeda.apice.unibo.it), where you can login with your `unibo` credential and run your experiments.
 
 ### - `studio.unibo` credential users
 
@@ -24,6 +24,6 @@ You'll not be able to directly access the Portainer Dashboard with your credenti
   
 ## Request access to the cluster
 
-After you are granted to use the VPN, you can access the Portainer dashboard at [http://andromeda.apice.unibo.it](http://andromeda.apice.unibo.it), however, you will not be able to see any cluster.
+After you are granted to use the VPN, you can access the Portainer dashboard at [https://andromeda.apice.unibo.it](https://andromeda.apice.unibo.it), however, you will not be able to see any cluster.
 Cluster administrators will give you permission to access the appropriate cluster and will give you a persistent volume on which to save your experiments' results.
 
