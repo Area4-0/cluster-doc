@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Quickstart - Cluster 4.0 Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Quickstart";
+        var mkdocs_page_input_path = "quickstart.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Cluster 4.0 Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../good-practices/">Good Practices</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Quickstart</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#use-the-cluster">Use the cluster</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Explanation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../explanation/docker-compose/">Docker compose</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../explanation/docker-swarm/">Docker Swarm</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../explanation/jupyter-notebook/">Jupyter notebooks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../explanation/portainer/">Portainer Dashboard</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How to</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../how-to/access-container/">How to access deployed container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../how-to/deploy-an-ssh-container/">Deploy an Open SHH server container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../how-to/deploy-container/">How to deploy a container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../how-to/request-access/">How to request access to the platform</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Cluster 4.0 Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Quickstart</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">#</a></h1>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
+<p>The important aspects that need to be known, at least on a basic level, by cluster users are:</p>
+<ul>
+<li><a href="https://www.docker.com/">Docker</a> (Documentation <a href="https://docs.docker.com/">here</a> - the basic commands are fine)</li>
+<li><a href="https://docs.docker.com/engine/swarm/">DockerSwarm</a></li>
+<li><a href="https://www.portainer.io/">Portainer</a> (Documentation <a href="https://docs.portainer.io/">here</a> that focus on the user-side concepts and how to deploy containers)</li>
+<li>Jupyter notebook (Google returns endless resources on this topic, for instance: <a href="https://www.dataquest.io/blog/jupyter-notebook-tutorial/">https://www.dataquest.io/blog/jupyter-notebook-tutorial/</a>, <a href="https://towardsdatascience.com/a-beginners-tutorial-to-jupyter-notebooks-1b2f8705888a">https://towardsdatascience.com/a-beginners-tutorial-to-jupyter-notebooks-1b2f8705888a</a>)</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Consider reading <a href="https://unibo-spe.github.io/09-containerization">https://unibo-spe.github.io/09-containerization</a></p>
+</div>
+<h2 id="use-the-cluster">Use the cluster<a class="headerlink" href="#use-the-cluster" title="Permanent link">#</a></h2>
+<ol>
+<li>Request access to the VPN and to the required cluster, <a href="../how-to/request-access/">here</a> is described how to do it.</li>
+<li>Configure your environment to use the VPN, following the guide received by email.</li>
+<li>Go to <a href="https://andromeda.apice.unibo.it">https://andromeda.apice.unibo.it</a></li>
+<li>Select an environment (i.e. a cluster) from the available ones on which launch containers</li>
+<li>Launch your Docker container following <a href="../good-practices/#good-practices">good practices</a>.</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Each machine is configured to run updates every Sunday at 1:30 AM. Sometimes, the update process requires a reboot of the machine. If this happens, the machine will be unavailable for a few minutes. If you are running a job, it will be interrupted and you will have to restart it. Please, follow the <a href="../good-practices/#good-practices">persistency good practices</a> in order to save your experiments results in a persistent volume.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The connection is provided by internal SSL certifiates, modern browsers try to block the connection to them. You have to explicitly declare, the first time you enter the URL described above, that you want to access the website.
+<img alt="" src="../images/declaration-security.png" /></p>
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../good-practices/" class="btn btn-neutral float-left" title="Good Practices"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../explanation/docker-compose/" class="btn btn-neutral float-right" title="Docker compose">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../good-practices/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../explanation/docker-compose/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
