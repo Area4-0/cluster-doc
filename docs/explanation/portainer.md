@@ -1,3 +1,0 @@
-Portainer Dashboard 
-===================
-TODO

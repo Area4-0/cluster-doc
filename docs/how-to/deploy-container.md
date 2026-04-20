@@ -1,44 +1,36 @@
 # How to deploy a container
 
-Users can directly deploy a container using the Portainer dashboard, in the `Containers` menu entry.
-After clicking on the `Add container` button, the user will be prompted to a container configuration page.
-After filling out the form, the user can click on the `Deploy the container` button to deploy the container.
+After accessing the platform, 
+you can find two buttons in the top right corner of the web ui, one for creating a container `Create CT` and another one for creating a virtual machine `Create VM`.
+Clicking on the `Create CT` button, you will be asked to configure your LXC container.
+If you never used an LXC container before, you can read the [LXC Introduction](https://linuxcontainers.org/lxc/introduction/).
 
-![](../../images/create_container.png)
+![](../../images/create_container_general.png)
 
-Two registries are currently available to pull images in Portainer: Docker Hub and Ascend Hub.
-The latter is configured to the Huawei registry, which contains the Ascend images.
+In the `General` tab, you will be asked to provide:
 
-To better understand the configuration of a container, please refer to the [Docker documentation](https://docs.docker.com/engine/reference/run).
+1. The node of the cluster on which you want to deploy the container. You can choose any node, but consider that if you choose a node with few resources, your container will have few resources available.
+2. The hostname of the container, this is the name that will be used to identify the container inside of the cluster. 
+    !!!note
+        It is recommended to use a unique hostname for each container, to avoid conflicts with other containers. A good practice is to use the following format: `<name>.<surname>-<purpose>`, for instance `m.baiardi-experiment-network`. In this way, we can easily identify the owner of the container and its purpose. The hostname is also used to access the container through the network.
+3. The resource pool of the container, this is the resource pool assigned from your supervisor. You can only deploy containers in the resource pool assigned to you, and you can only see the containers deployed in that resource pool.
+4. The password for the container, this is the root password configured in the container.
+5. You can also provide a SSH public key, in this way you can access the container using SSH without providing a password. This is the recommended way to access the container, since it is more secure than using a password. 
+    !!!note
+        Providing a SSH public key does not configure the SSH server inside of the container, you have to provide a SSH server configuration in the container template you choose, or configure it by yourself after the container creation.
 
-However, consider that if the container is restarted (e.g. after a reboot), the container will be restarted with the same configuration as the one provided in the form. 
-This means that all the package installations made after the container creation will be lost. 
-You can avoid this overcome in three ways:
+The `Template` tab allows you to choose the template of the container, this is the base image that will be used to create the container.
+By selecting `shared-storage-antares` as the `Storage` option, you can see the available templates.
 
-1. Use `App Templates` which are pre-configured to contain the most common packages for data-scientist use cases, but also allow you to install additional packages that will persist after the possible reboot. This is the most recommended way to work inside the cluster.  
-2. Build your own image, and push it to Docker Hub registry. Then you can deploy the container using this image. This is the recommended way to work inside the cluster if you need to install a lot of packages, and these are not available in the App Templates.
-3. Consider allocating your volume as your home directory inside of the container, in this way all packages installed `locally` will persist after a reboot. This is not the recommended way to work inside the cluster; but works for the most simple use cases. 
+In the `Disks` tab, you can configure the storage for your container.
+You **must** configure the storage to use the `shared-storage-antares` shared storage, otherwise and you will not be able to save your work in a persistent way.
+You can here select the initial size of the disk, but consider that you can always resize it later if you need more space. **For this reason, it is recommended to start with a small disk size, for instance 10GB, and then resize it if you need more space**.
 
-!!! note
-    Just remember that, in the third scenario, you need to specify that the installation is local for each package you install, for example, with `pip` you have to specify `pip install --user <package>`.
+You can also configure the number of `CPU` cores and the amount of `RAM` for your container.
 
-If you encounter problems with the deployment, you can also ask cluster administrators to provide you with a pre-configured container that satisfies your needs.
+In the `Network` tab, you can configure the network for your container.
+You have to select the `vmbr0` network bridge, and you have to provide a unique MAC address for your container.
+You can ask your supervisor to assign you a valid MAC address.
+**Each container MUST have a unique MAC address. if you want more containers, consider a Docker service inside a VM, in this way you can have multiple containers with the same MAC address.** 
 
-!!! note
-    Inside of a Docker container you are logged as admin, and you can install whatever you want with the normal package manager (for instance, if the container is based on Ubuntu you can use `sudo apt install <package>`).
-
-!!! note
-    See [docker volumes](../explanation/docker-swarm.md#volumes) for more information about Docker volumes.
-
-# App Templates
-
-To ease the deployment of applications, several pre-configured Docker stacks are available inside of the Portainer dashboard. These templates are available in the `App Templates` menu entry, they are prepared to cover the most common use cases for data-scientist with the minimum configuration required.
-
-![](../../images/app_templates.png)
-
-# Secrets
-
-If the template you chose uses a Jupyter Notebook, then it requires a Docker `secret` in order to configure a password for the notebook. To create a secret, you can go to the `Secrets` menu entry, and click on the `Add secret` button.
-
-!!! seealso
-    See [docker secrets](../explanation/docker-swarm.md#secrets) for more information about Docker secrets.
+After configuring all the tabs, you can create the container.
