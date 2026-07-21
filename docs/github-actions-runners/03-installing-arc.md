@@ -129,3 +129,7 @@ self-hosted-runners-ll5dq-runner-pxjh4   2/2     Running   0          5d20h
 ```
 
 If everything is fine, the last test you should do is run some workflows and see how the system behaves.
+
+### Using ARC in a workflow
+
+Once ARC is installed and a runner scale set is deployed, you can target it from a GitHub Actions workflow by setting the `runs-on` key to the same name you used in the `runnerScaleSetName` configuration.
