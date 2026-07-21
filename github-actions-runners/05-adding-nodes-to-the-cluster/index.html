@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Adding nodes to the k3s cluster - Cluster 4.0 Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Adding nodes to the k3s cluster";
+        var mkdocs_page_input_path = "github-actions-runners/05-adding-nodes-to-the-cluster.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Cluster 4.0 Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../good-practices/">Good Practices</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quickstart/">Quickstart</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Github actions runners</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../01-introduction/">Introduction</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-setting-up-k3s-and-helm/">Setting up k3s and installing Helm</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-installing-arc/">Actions Runner Controller</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../04-authentication-with-github-app/">Authentication with a GitHub App</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Adding nodes to the k3s cluster</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#retrieving-the-join-token">Retrieving the join token</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#how-to-add-a-node-manual-setup">How to add a node: manual setup</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#how-to-add-a-node-terraform-ansible-setup">How to add a node: Terraform + Ansible setup</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#how-to-get-your-proxmox-api-token">How to get your Proxmox API token</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#provisioning-the-virtual-machine-with-terraform">Provisioning the virtual machine with Terraform</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#configuring-k3s-with-ansible">Configuring k3s with Ansible</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How to</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/access-container/">How to access deployed container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/deploy-container/">How to deploy a container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/request-access/">How to request access to the platform</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Cluster 4.0 Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Github actions runners</li>
+      <li class="breadcrumb-item active">Adding nodes to the k3s cluster</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="adding-nodes-to-the-k3s-cluster">Adding nodes to the k3s cluster<a class="headerlink" href="#adding-nodes-to-the-k3s-cluster" title="Permanent link">#</a></h1>
+<p>Now that you have a running k3s cluster and ARC correctly installed, you can start expanding your cluster by adding new nodes according to your resource needs.
+There are two ways to add a new node to the cluster: manually, or using Infrastructure as Code (Terraform + Ansible) for a more automated approach.</p>
+<h2 id="retrieving-the-join-token">Retrieving the join token<a class="headerlink" href="#retrieving-the-join-token" title="Permanent link">#</a></h2>
+<p>In both cases you will need to retrieve the join token from the master.
+This token will be used during the installation of k3s on the new machine.</p>
+<p>Execute this command on your master:</p>
+<pre><code class="language-bash">sudo cat /var/lib/rancher/k3s/server/node-token
+</code></pre>
+<p>Copy the output and store it securely, since it is sensitive information.</p>
+<h2 id="how-to-add-a-node-manual-setup">How to add a node: manual setup<a class="headerlink" href="#how-to-add-a-node-manual-setup" title="Permanent link">#</a></h2>
+<p>Create a virtual machine using the Proxmox UI. For a guide on how to create a virtual machine or an LXC container, check
+<a href="../../how-to/deploy-container/">how to deploy a container</a>.</p>
+<p>Install <code>curl</code>, if it is not already installed.</p>
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt install curl -y
+</code></pre>
+<p>Install k3s, completing the command with the IP address of your master and the token previously retrieved.</p>
+<pre><code class="language-bash">curl -sfL https://get.k3s.io | K3S_URL=https://...:6443 K3S_TOKEN=... sh -
+</code></pre>
+<p>Now, to verify that everything worked correctly, execute this command on the master:</p>
+<pre><code class="language-bash">kubectl get nodes
+</code></pre>
+<p>You should be able to see the new node.</p>
+<h2 id="how-to-add-a-node-terraform-ansible-setup">How to add a node: Terraform + Ansible setup<a class="headerlink" href="#how-to-add-a-node-terraform-ansible-setup" title="Permanent link">#</a></h2>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h3>
+<ul>
+<li>Terraform installed on your machine. Check the
+  <a href="https://developer.hashicorp.com/terraform/install">official documentation</a>.</li>
+<li>Ansible installed on your machine. Check the
+  <a href="https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html">official documentation</a>.</li>
+<li>Access credentials to your Proxmox instance (API token or user/password).</li>
+</ul>
+<h3 id="how-to-get-your-proxmox-api-token">How to get your Proxmox API token<a class="headerlink" href="#how-to-get-your-proxmox-api-token" title="Permanent link">#</a></h3>
+<p>Log in to the Proxmox web UI, go to <code>Datacenter</code> &gt; <code>Permissions</code> &gt; <code>API Tokens</code> and click <code>Add</code>.
+Now select the user the token will belong to and enter a <code>Token ID</code>, a name to identify the token's purpose.
+Lastly, click <code>Add</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The token secret is shown only once, right after creation. Copy it
+immediately and store it securely.</p>
+</div>
+<h3 id="provisioning-the-virtual-machine-with-terraform">Provisioning the virtual machine with Terraform<a class="headerlink" href="#provisioning-the-virtual-machine-with-terraform" title="Permanent link">#</a></h3>
+<p>The Terraform scripts in <a href="https://github.com/Thesis-repositories/K3s-new-node">this repository</a> provision a new VM on Proxmox by cloning it from an existing template, using the <code>bpg/proxmox</code> provider.</p>
+<p>Clone the repository and move into the <code>Terraform</code> folder:</p>
+<pre><code class="language-bash">git clone https://github.com/Thesis-repositories/K3s-new-node.git
+cd K3s-new-node/Terraform
+</code></pre>
+<p>Create a <code>terraform.tfvars</code> file in this folder with your actual values, you can check the file <code>variables.tf</code> for a better understanding of what these variables should contain:</p>
+<pre><code class="language-hcl">proxmox_api_url = &quot;https://andromeda.apice.unibo.it:8006/&quot;
+proxmox_api_token = &quot;&lt;USER&gt;!&lt;TOKEN_ID&gt;=&lt;TOKEN_SECRET&gt;&quot;
+vm_mac_address = &quot;&lt;VM_MAC_ADDRESS&gt;&quot;
+ssh_public_key = &quot;&lt;YOUR_PUBLIC_KEY&gt;&quot;
+vm_hostname = &quot;&lt;VM_HOSTNAME&gt;&quot;
+target_node = &quot;&lt;A_PROXMOX_CLUSTER_NODE&gt;&quot;
+template_node = &quot;iris&quot;
+template_id = 100
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The MAC address of the new machine has to be a valid address and needs to be assigned by a supervisor (In the next section you will also need the corresponding IP address). </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There is already a cloud-init template inside the cluster. It is in the node "iris", and its VM ID is 100.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>vm_cpu_cores</code> (default 2) and <code>vm_memory</code> (default 2048 MB) are optional and can be omitted from <code>terraform.tfvars</code> if the defaults are fine for your setup.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code>terraform.tfvars</code> contains sensitive values (the Proxmox API token) and is already excluded via <code>.gitignore</code>.</p>
+</div>
+<p>Initialize Terraform with:</p>
+<pre><code class="language-bash">terraform init
+</code></pre>
+<p>Now you can apply the configuration:</p>
+<pre><code class="language-bash">terraform apply
+</code></pre>
+<p>Terraform will show the planned changes and ask for confirmation before creating the VM.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Even after the <code>Apply complete!</code> message, you probably won't be able to access the new virtual machine yet, and will get a <code>Connection refused</code> error when trying to connect via SSH. This happens because the machine is still initializing, wait a couple of minutes and try again.</p>
+</div>
+<h3 id="configuring-k3s-with-ansible">Configuring k3s with Ansible<a class="headerlink" href="#configuring-k3s-with-ansible" title="Permanent link">#</a></h3>
+<p>Once the VM is up and running, the
+<a href="https://github.com/Thesis-repositories/K3s-new-node/blob/main/Ansible/join-k3s.yaml">Ansible playbook</a> installs k3s in agent mode and joins it to the existing cluster.</p>
+<p>Move into the <code>Ansible</code> folder:</p>
+<pre><code class="language-bash">cd ../Ansible
+</code></pre>
+<p>Create an <code>inventory.ini</code> file listing the new node:</p>
+<pre><code class="language-bash">[new_nodes]
+vm1 ansible_host=&lt;IP_ADDRESS_OF_THE_NEW_MACHINE&gt; ansible_user=ubuntu ansible_ssh_private_key_file=&lt;PATH_TO_YOUR_PRIVATE_KEY&gt; ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>ansible_user</code> must be <code>ubuntu</code>, since that's the user configured via cloud-init in the Terraform step.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>ansible_ssh_private_key_file</code> must point to the private key matching the public key passed as <code>ssh_public_key</code> in <code>terraform.tfvars</code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>ansible_ssh_common_args='-o StrictHostKeyChecking=no'</code> skips SSH's first-connection host verification, which is otherwise required for a freshly created VM Ansible has never connected to.</p>
+</div>
+<p>Run the playbook, passing the join token retrieved earlier and the master's URL as extra variables:</p>
+<pre><code class="language-bash">ansible-playbook -i inventory.ini join-k3s.yaml \
+  -e k3s_url=&quot;https://&lt;MASTER_IP&gt;:6443&quot; \
+  -e k3s_token=&quot;&lt;TOKEN&gt;&quot;
+</code></pre>
+<p>The playbook checks whether k3s is already installed on the target host before running the installation, so it's safe to run more than once.</p>
+<p>Now, to verify that everything worked correctly, execute this command on the master:</p>
+<pre><code class="language-bash">kubectl get nodes
+</code></pre>
+<p>You should be able to see the new node.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../04-authentication-with-github-app/" class="btn btn-neutral float-left" title="Authentication with a GitHub App"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../how-to/access-container/" class="btn btn-neutral float-right" title="How to access deployed container">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../04-authentication-with-github-app/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../how-to/access-container/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

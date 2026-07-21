@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Authentication with a GitHub App - Cluster 4.0 Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Authentication with a GitHub App";
+        var mkdocs_page_input_path = "github-actions-runners/04-authentication-with-github-app.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Cluster 4.0 Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Introduction</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../good-practices/">Good Practices</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../quickstart/">Quickstart</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Github actions runners</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../01-introduction/">Introduction</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../02-setting-up-k3s-and-helm/">Setting up k3s and installing Helm</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../03-installing-arc/">Actions Runner Controller</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Authentication with a GitHub App</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-a-github-app">What is a GitHub App?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#creating-a-github-app">Creating a GitHub App</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#generating-a-private-key">Generating a private key</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#installing-the-app">Installing the App</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#retrieving-the-credentials-you-will-need">Retrieving the credentials you will need</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../05-adding-nodes-to-the-cluster/">Adding nodes to the k3s cluster</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How to</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/access-container/">How to access deployed container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/deploy-container/">How to deploy a container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/request-access/">How to request access to the platform</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Cluster 4.0 Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Github actions runners</li>
+      <li class="breadcrumb-item active">Authentication with a GitHub App</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="authentication-with-a-github-app">Authentication with a GitHub App<a class="headerlink" href="#authentication-with-a-github-app" title="Permanent link">#</a></h1>
+<p>This page explains how to create and configure a GitHub App to authenticate yourself to GitHub API.</p>
+<h2 id="what-is-a-github-app">What is a GitHub App?<a class="headerlink" href="#what-is-a-github-app" title="Permanent link">#</a></h2>
+<p>A GitHub App is an identity that can act on GitHub's API independently from
+any single user account. Unlike a personal access token, which is tied to a
+specific user and inherits all of their permissions, a GitHub App has its own
+scoped permissions and is installed on the specific organizations or
+repositories it needs to access.</p>
+<h2 id="creating-a-github-app">Creating a GitHub App<a class="headerlink" href="#creating-a-github-app" title="Permanent link">#</a></h2>
+<p>From your profile/organization go to <code>Settings</code> <strong>&gt;</strong> <code>Developer Settings</code> <strong>&gt;</strong> <code>GitHub Apps</code>, you should now see a <code>New GitHub App</code> button.</p>
+<p>Now that you are on the <code>Create GitHub App</code> page, you must provide a unique name for your app, something like 'API-authentication-app', and an <code>Homepage URL</code>, here you can just insert your profile/organization URL.</p>
+<p>Leave the <code>Identifying and authorizing users</code> and <code>Post installation</code> sections to the default/blank values, next disable the <code>Active</code> checkbox in the <code>Webhook</code> section.</p>
+<p>In the <code>Permissions</code> section you can specify what permissions your app should have when installed, it is recommended to grant just the permissions needed.
+If you are reading this to authenticate ARC, there are three different scenarios depending at what level you want your runners to be registered on:</p>
+<ul>
+<li>If you intend to use the runners for a specific repository on your personal profile, you will just need: <code>Administration (Repository permissions): Read and write</code> permissions.</li>
+<li>If you intend to use the runners for a specific repository inside an organization, you will need <code>Administration (Repository permissions): Read and write</code> and <code>Self-hosted runners (Organization permissions): Read and write</code> permissions.</li>
+<li>If you intend to use the runners for an organization, you will just need <code>Self-hosted runners (Organization permissions): Read and write</code> permissions.</li>
+</ul>
+<p>Lastly, for the <code>Where can this GitHub App be installed?</code> option, you are free to choose the most appropriate setting.</p>
+<p>You can now create your App.</p>
+<h2 id="generating-a-private-key">Generating a private key<a class="headerlink" href="#generating-a-private-key" title="Permanent link">#</a></h2>
+<p>After creating the App, scroll down in the <code>General</code> tab to the <code>Private keys</code> section, then click on <code>Generate a private key</code>.
+This downloads a <code>.pem</code> file that contains your App private key.</p>
+<h2 id="installing-the-app">Installing the App<a class="headerlink" href="#installing-the-app" title="Permanent link">#</a></h2>
+<p>Go to the <code>Install App</code> tab and select the account/organization you want to install the App on. Now you can also choose to grant the permissions the App needs to all repositories or just the ones you select.</p>
+<h2 id="retrieving-the-credentials-you-will-need">Retrieving the credentials you will need<a class="headerlink" href="#retrieving-the-credentials-you-will-need" title="Permanent link">#</a></h2>
+<p>Once created and installed, you'll need these three values to authenticate as the App:</p>
+<ul>
+<li><strong>App ID</strong>: shown on the App's settings page.</li>
+<li><strong>Private key</strong>: the <code>.pem</code> file downloaded earlier.</li>
+<li><strong>Installation ID</strong>: Go to <code>Settings</code> <strong>&gt;</strong> <code>Applications</code> / <code>GitHub Apps</code> (depending if you are on a normal account or an organization) and click on the <code>Configure</code> button of your App. Now check the URL, you should see something like <code>/installations/130228035</code>, the last number is your Installation ID.</li>
+</ul>
+<p>If your goal is to authenticate ARC, you can now go back to the installation page <a href="../03-installing-arc/">here</a>.
+If your goal is to authenticate to GitHub REST API, check out <a href="https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/authenticating-as-a-github-app-installation">this page</a> that will explain you how to use these credentials.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../03-installing-arc/" class="btn btn-neutral float-left" title="Actions Runner Controller"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../05-adding-nodes-to-the-cluster/" class="btn btn-neutral float-right" title="Adding nodes to the k3s cluster">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../03-installing-arc/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../05-adding-nodes-to-the-cluster/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
